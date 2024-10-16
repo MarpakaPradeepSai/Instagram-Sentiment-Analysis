@@ -1,13 +1,10 @@
 import streamlit as st
-from transformers import (
-    DistilBertTokenizer,
-    DistilBertForSequenceClassification
-)
+from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 import torch
 import os
 
 # Load the model and tokenizer
-model_dir = 'distilbert_model'  # Update this if your path is different
+model_dir = './distilbert_model'  # Update this if your path is different
 model = DistilBertForSequenceClassification.from_pretrained(model_dir)
 tokenizer = DistilBertTokenizer.from_pretrained(model_dir)
 
