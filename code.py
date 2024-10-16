@@ -4,9 +4,15 @@ import torch
 import os
 
 # Load the model and tokenizer
-model_dir = './distilbert_model'  # Update this if your path is different
-model = DistilBertForSequenceClassification.from_pretrained(model_dir)
-tokenizer = DistilBertTokenizer.from_pretrained(model_dir)
+model_dir = './distilbert_model'
+st.write(f"Loading model from {model_dir}...")
+
+try:
+    model = DistilBertForSequenceClassification.from_pretrained(model_dir)
+    tokenizer = DistilBertTokenizer.from_pretrained(model_dir)
+    st.write("Model and tokenizer loaded successfully!")
+except Exception as e:
+    st.error(f"Error loading model: {e}")
 
 # Define sentiment mapping
 sentiment_mapping = {0: "Negative", 1: "Neutral", 2: "Positive"}
