@@ -1,5 +1,8 @@
 import streamlit as st
-from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+from transformers import (
+    DistilBertTokenizer,
+    DistilBertForSequenceClassification
+)
 import torch
 import os
 
