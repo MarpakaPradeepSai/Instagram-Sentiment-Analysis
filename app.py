@@ -12,7 +12,7 @@ def download_file_from_github(url, local_path):
 
 # URLs of your model files on GitHub
 repo_url = 'https://github.com/yourusername/yourrepositoryname/raw/main/distillbert_model'
-files = ['config.json', 'pytorch_model.bin', 'special_tokens_map.json', 'tokenizer_config.json', 'training_args.bin', 'vocab.txt']
+files = ['config.json', 'model.safetensors', 'special_tokens_map.json', 'tokenizer_config.json', 'training_args.bin', 'vocab.txt']
 
 # Download each file
 for file in files:
