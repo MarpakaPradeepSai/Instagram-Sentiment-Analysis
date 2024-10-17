@@ -7,24 +7,31 @@ import os
 # Function to download model files from GitHub
 def download_file_from_github(url, local_path):
     response = requests.get(url)
-    with open(local_path, 'wb') as f:
-        f.write(response.content)
+    if response.status_code == 200:
+        with open(local_path, 'wb') as f:
+            f.write(response.content)
+    else:
+        st.error(f"Failed to download {url}: Status code {response.status_code}")
 
 # URLs of your model files on GitHub
 repo_url = 'https://github.com/your_username/your_repo/raw/main/distilbert_model'  # Change to your actual repo URL
 files = ['config.json', 'model.safetensors', 'special_tokens_map.json', 'tokenizer_config.json', 'training_args.bin', 'vocab.txt']
 
 # Create model directory if it doesn't exist
-if not os.path.exists('./distilbert_model'):
-    os.makedirs('./distilbert_model')
+model_dir = './distilbert_model'
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
 
 # Download each file
 for file in files:
-    download_file_from_github(f"{repo_url}/{file}", f"./distilbert_model/{file}")
+    download_file_from_github(f"{repo_url}/{file}", os.path.join(model_dir, file))
 
 # Load tokenizer and model
-tokenizer = DistilBertTokenizer.from_pretrained('./distilbert_model')
-model = DistilBertForSequenceClassification.from_pretrained('./distilbert_model')
+try:
+    tokenizer = DistilBertTokenizer.from_pretrained(model_dir)
+    model = DistilBertForSequenceClassification.from_pretrained(model_dir)
+except Exception as e:
+    st.error(f"Error loading model: {e}")
 
 # Function to predict sentiment
 def predict_sentiment(text):
